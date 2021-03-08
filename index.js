@@ -20,6 +20,11 @@ app.use(express.json());
 
 app.use("/batch", batchRouter);
 
+app.use((err, req, res, next) => {
+    console.log(err);
+    if (err) res.status(500).send("Internal Server Error.");
+});
+
 app.listen(process.env.SERVERPORT, (error)=>{
     if(error){
         console.log(error);
