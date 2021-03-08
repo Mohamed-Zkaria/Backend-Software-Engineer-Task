@@ -1,9 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const mongoose = require('mongoose');
+
+const batchRouter = require("./routes/batchRoute.js");
+
 dotenv.config();
 const app = express();
 
-const mongoose = require('mongoose');
 mongoose.connect(`mongodb://${process.env.SERVER}/garment`, {useNewUrlParser: true, useUnifiedTopology: true}, (error)=>{
     if(error){
         console.log(error)
@@ -13,6 +16,9 @@ mongoose.connect(`mongodb://${process.env.SERVER}/garment`, {useNewUrlParser: tr
     }
 });
 
+app.use(express.json());
+
+app.use("/batch", batchRouter);
 
 app.listen(process.env.SERVERPORT, (error)=>{
     if(error){
